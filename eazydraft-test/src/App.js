@@ -1,16 +1,16 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Button from "@mui/material/Button";
 
-function TextItem({ names, ages, index, updateDetails }) {
-  
+function TextItem({ names, age, index, updateDetails }) {
+
   const handleClick = () => {
-    updateDetails(names, ages, index);
+    updateDetails(index);
   };
   
-  const Name = names[index];
-  const Age = ages[index];
+  const Name = names;
+  const Age = age;
 
 
   return (
@@ -22,27 +22,31 @@ function TextItem({ names, ages, index, updateDetails }) {
   );
 }
 
+
 function App() {
   const [names, setNames] = useState(["Hello"]);
   const [ages, setAges] = useState([23]);
 
   function addItem() {
-    names.push(Math.random().toString(36).substring(2, 7));
-    setNames(names);
-    ages.push(Math.floor(Math.random() * 100));
-    setAges(ages);
+    const updatedName = (Math.random().toString(36).substring(2, 7));
+    setNames([...names, updatedName]);
+
+    const updatedAge =(Math.floor(Math.random() * 100));
+    setAges([...ages, updatedAge]);
+    console.log(updatedName)
   }
 
-  function updateDetails(name, age, index) {
+  function updateDetails(index) {
     //Remove current name and replace with blank
-    let currentName = names[index];
-    let currentAge = ages[index];
-    let namearray = names.filter((item) => item !== name);
-    let agearray = ages.filter((item) => item !== age);
-    namearray.push("");
-    agearray.push("");
-    setNames(namearray);
-    setAges(agearray);
+   
+    const nameArray = [...names];
+    const ageArray = [...ages];
+
+    nameArray[index] = "";
+    ageArray[index] = "";
+
+    setNames(nameArray);
+    setAges(ageArray);
   }
 
   //Whenever name is updated, print it
@@ -54,13 +58,13 @@ function App() {
         <img src={logo} className="App-logo" alt="logo" />
         <p>Welcome to the EazyDraft test application.</p>
         <div onClick={addItem}>Click to add a field</div>
-        {names.map((name, index) => (
+        {names?.map((el, index) => (
           <TextItem
             key={index} //unique key for each element
-            names={names}
-            ages={ages}
+            names={el}
+            age={ages[index]}
             index={index}
-            updateDetails={updateDetails}
+            updateDetails={() => updateDetails(index)}
           />
         ))}
       </header>
