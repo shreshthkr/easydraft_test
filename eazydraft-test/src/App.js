@@ -9,14 +9,11 @@ function TextItem({ names, age, index, updateDetails }) {
     updateDetails(index);
   };
   
-  const Name = names;
-  const Age = age;
-
 
   return (
     <div>
-      <p>Name: {Name}</p>
-      <p>Age: {Age}</p>
+      <p>Name: {names}</p>
+      <p>Age: {age}</p>
       <Button onClick={handleClick}>Reset Details</Button>
     </div>
   );
@@ -33,7 +30,6 @@ function App() {
 
     const updatedAge =(Math.floor(Math.random() * 100));
     setAges([...ages, updatedAge]);
-    console.log(updatedName)
   }
 
   function updateDetails(index) {
